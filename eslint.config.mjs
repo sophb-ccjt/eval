@@ -8,7 +8,7 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser
     }
-  }
+  },
   {
     files: ["**/*.js", "**/*.mjs"],
     plugins: { js },
