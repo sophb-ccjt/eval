@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  run ESLint:
+  cleanup:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
