@@ -1,1 +1,1 @@
-- Fixed faulty header fetching
+- Fixed script

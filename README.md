@@ -9,6 +9,4 @@ example: `. MPP.chat.send('Hello world from the eval userscript!')`
 # notice
 global `let` variables are meant to be changed to what you want.
 you can easily change them by using the eval command, as well.
-for example, you can run
-`. validCmds.push(";")`,
-which enables you to use `; {code}`.
+for example, you can run `. validCmds.push(";")`, which enables you to use `; {code}`.

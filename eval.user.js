@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eval
 // @namespace    <gone>
-// @version      3.0.2
+// @version      3.0.3
 // @description  simple eval script
 // @author       soph b
 // @include      /^https?:\/\/(?:www\.)?(?:multiplayerpiano\.(?:org|net|dev|com)|(?:soot)?mpp\.(?:8448\.space|smp-meow\.net|(?:hyye|autoplayer)\.xyz)|piano\.(?:mpp\.community|ourworldofpixels\.com)|staging-mpp\.sad\.ovh)(?:\/.*)?/
@@ -23,16 +23,20 @@ async function populateHeader() {
     const headerLines = script
         .split("// ==/Userscript==")[0] // split script into header at index 0 and script content at index 1
         .split('\n') // split by lines
-        .slice(1); // remove the first item of the array, giving the header's lines without the separator
+        .slice(1, -1); // remove the first item of the array, giving the header's lines without the separators
 
     const headerRegex = /\/\/ +@(.+) +(.+)/g; // group 1 is property name, group 2 is property value
     headerLines.forEach(line => {
-        const groupMatches = line
-            .match(headerRegex) // get groups based on regex
-            .map(v => v) // normalize array (remove items with keys)
-            .slice(1); // remove first item of array, giving only groups
+        const lineMatch = headerRegex.exec(line);
 
-        header[groupMatches[0]] = groupMatches[1];
+        if (!lineMatch) return; // skip if there are no matches
+
+        const groups = lineMatch
+            .map(v => v) // normalize array by removing items with keys
+            .slice(1) // remove first item of array, giving only groups
+            .map(v => v.trim()); // trim whitespace (maybe merge with .map above?)
+        
+        header[groups[0]] = groups[1];
     });
 
     // freeze the header so it can't be messed with during runtime
@@ -111,11 +115,11 @@ MPP.client.on("a", function(msg) {
     const cmd = args[0];
     const error = errors[Math.floor(Math.random()*errors.length)];
     const client = MPP.client;
-    const logMsg = (msg) => {
+    const logMsg = (text) => {
         const prefix = `${Date.now()} [EVAL] `;
         const suffix = '';
-        log.push(msg);
-        console.log(prefix + msg + suffix);
+        log.push(text);
+        console.log(prefix + text + suffix);
     }
 
     // send function
@@ -176,7 +180,7 @@ MPP.client.on("a", function(msg) {
                                     }
                                     return finalStr;
                                 }
-                                return btoaCensor(localStorage.token, 'a'.replaceAll("\\", ""), '[no]', 15);
+                                return btoaCensor(localStorage.token, result, '[no]', 15);
                             })()
                         );
                         break;
@@ -213,7 +217,6 @@ MPP.client.on("a", function(msg) {
                         output(JSON.stringify(result))
                         break;
                 }
-                logMsg('eval executed')
             } catch (err) {
                 if (!err.message) {
                     send(`${outsymbol} *${error}* - ❌ [Raw \`throw\`] ${err}`);
@@ -224,14 +227,14 @@ MPP.client.on("a", function(msg) {
             } finally {
                 logMsg('eval executed');
                 for (const [variable, value] of Object.entries(variables)) {
-                    if (window[variable] !== value) {
+                    if (globalThis[variable] !== value) {
                         variables[variable] = window[variable];
                         localStorage.eval_variables = JSON.stringify(variables);
                     }
                 }
             }
         }
-        if (new RegExp(`(?:${validCmds.map(RegExp.escape).join('|')})about`)) {
+        if (new RegExp(`(?:${validCmds.map(RegExp.escape).join('|')})about`).test(cmd)) {
             MPP.chat.send("eval - made by ccjt - running version " + header.version)
         }
     }
