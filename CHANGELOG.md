@@ -1,1 +1,1 @@
-- Fixed script
+- Fixed array contents not having a canonical value

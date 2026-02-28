@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eval
 // @namespace    <gone>
-// @version      3.0.3
+// @version      3.0.4
 // @description  simple eval script
 // @author       soph b
 // @include      /^https?:\/\/(?:www\.)?(?:multiplayerpiano\.(?:org|net|dev|com)|(?:soot)?mpp\.(?:8448\.space|smp-meow\.net|(?:hyye|autoplayer)\.xyz)|piano\.(?:mpp\.community|ourworldofpixels\.com)|staging-mpp\.sad\.ovh)(?:\/.*)?/
@@ -195,6 +195,7 @@ MPP.client.on("a", function(msg) {
                             // array
                             const arrayItemsStr = [...result]
                                 .slice(0, maxItems)
+                                .map(JSON.stringify) // lore accurate representation
                                 .join(', ');
                             const arrayStr = `(${result.length} items) [ ${arrayItemsStr}${result.length > maxItems ? ', ...' : ''} ]`;
                             output(arrayStr);
