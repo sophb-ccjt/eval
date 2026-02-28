@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eval
 // @namespace    <gone>
-// @version      3.0.1
+// @version      3.0.2
 // @description  simple eval script
 // @author       soph b
 // @include      /^https?:\/\/(?:www\.)?(?:multiplayerpiano\.(?:org|net|dev|com)|(?:soot)?mpp\.(?:8448\.space|smp-meow\.net|(?:hyye|autoplayer)\.xyz)|piano\.(?:mpp\.community|ourworldofpixels\.com)|staging-mpp\.sad\.ovh)(?:\/.*)?/
@@ -17,7 +17,7 @@ async function populateHeader() {
     /* fetch script */
     const updateURL = 'https://raw.githubusercontent.com/sophb-ccjt/eval/refs/heads/main/eval.user.js';
     const r = await fetch(updateURL);
-    const script = await r.json();
+    const script = await r.text();
 
     /* parse header */
     const headerLines = script
