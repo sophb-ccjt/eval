@@ -1,4 +1,4 @@
-name: Organize Codebase
+name: Cleanup Codebase
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
       - run: npm install
 
       - name: Run ESLint
-      - run: npx eslint "**/*.js" --fix
+        run: npx eslint "**/*.js" --fix
 
       - name: Install dependencies if there are any
         run: npm ci
