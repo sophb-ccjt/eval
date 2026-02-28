@@ -21,7 +21,17 @@ jobs:
 
       - run: npm install
 
+      - name: Run ESLint
       - run: npx eslint "**/*.js" --fix
+
+      - name: Install dependencies if there are any
+        run: npm ci
+
+      - name: Update dependencies if there are any
+        run: npm update
+
+      - name: Run cleanup script
+        run: node cleanup.js
 
       - name: Commit changes
         run: |

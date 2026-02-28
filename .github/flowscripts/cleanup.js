@@ -48,6 +48,4 @@ files.forEach(file => {
 		append(file, '\n');
 		fileContent = read(file);
 	}
-	// run lint
-	exec(`npx eslint ${file}`)
 })
