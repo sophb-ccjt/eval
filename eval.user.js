@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eval
 // @namespace    <gone>
-// @version      3.0.0
+// @version      3.0.1
 // @description  simple eval script
 // @author       soph b
 // @include      /^https?:\/\/(?:www\.)?(?:multiplayerpiano\.(?:org|net|dev|com)|(?:soot)?mpp\.(?:8448\.space|smp-meow\.net|(?:hyye|autoplayer)\.xyz)|piano\.(?:mpp\.community|ourworldofpixels\.com)|staging-mpp\.sad\.ovh)(?:\/.*)?/
@@ -83,7 +83,6 @@ let validCmds = [
     '.',
     '>'
 ];
-
 
 if (localStorage.eval_variables == null) {
     // defaults
