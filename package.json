@@ -1,0 +1,5 @@
+{
+    "scripts": {
+        "organize": "node .github/flowscripts/organize.js"
+    }
+}
