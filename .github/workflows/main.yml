@@ -22,7 +22,7 @@ jobs:
       - run: npm install
 
       - name: Install ESLint dependencies
-        run: npm install eslint --save-dev
+        run: npm install --save-dev @stylistic/eslint-plugin
 
       - name: Run ESLint
         run: npx eslint "**/*.js" --fix
