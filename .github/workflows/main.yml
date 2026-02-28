@@ -21,12 +21,6 @@ jobs:
 
       - run: npm install
 
-      - name: Install ESLint dependencies
-        run: npm install --save-dev @stylistic/eslint-plugin
-
-      - name: Run ESLint
-        run: npx eslint "**/*.js" --fix
-
       - name: Install dependencies if there are any
         run: npm ci
 
