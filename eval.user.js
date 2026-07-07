@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eval
 // @namespace    <gone>
-// @version      3.0.4
+// @version      3.1.0
 // @description  simple eval script
 // @author       soph b
 // @include      /^https?:\/\/(?:www\.)?(?:multiplayerpiano\.(?:org|net|dev|com)|(?:soot)?mpp\.(?:8448\.space|smp-meow\.net|(?:hyye|autoplayer)\.xyz)|piano\.(?:mpp\.community|ourworldofpixels\.com)|staging-mpp\.sad\.ovh)(?:\/.*)?/
@@ -109,7 +109,7 @@ for (const [variable, value] of Object.entries(variables)) {
 
 const log = [];
 const charLimit = 512;
-MPP.client.on("a", function(msg) {
+MPP.client.on("a", async msg => {
     // helpers
     const args = msg.a.split(" ");
     const cmd = args[0];
@@ -155,7 +155,7 @@ MPP.client.on("a", function(msg) {
     if (MPP.client.getOwnParticipant()._id === msg.p._id) {
         if (validCmds.includes(cmd)) {
             try {
-                const result = eval(msg.a.substring(cmd.length).trim());
+                const result = await eval(`(async evalFunc()=>{${msg.a.substring(cmd.length).trim()})();`);
                 const app = types ? `[${(typeof result).toUpperCase()}] ` : "";
                 const output = (text) => {
                     MPP.chat.send(`${outsymbol} ${app}${text}`);
